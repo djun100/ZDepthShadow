@@ -31,6 +31,8 @@ public class MainActivity extends ActivityBaseHost {
     private TextView mTvHW;
 
     private View.OnClickListener mOnClickListener;
+    private Button mBtnHW;
+
     //genDefine_end
     @Override
     protected void onCreate(Bundle savedInstanceState) {
