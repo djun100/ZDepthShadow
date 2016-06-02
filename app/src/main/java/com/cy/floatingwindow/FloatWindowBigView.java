@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.cy.app.Log;
 import com.cy.testapp.R;
@@ -40,21 +41,11 @@ public class FloatWindowBigView extends LinearLayout {
         LayoutInflater.from(context).inflate(R.layout.float_window_big, this);
         //eg how to find widget
         mRlBigWindow = (RelativeLayout) findViewById(R.id.float_big_rl);
-//        mRlBigWindow.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                MyWindowManager.removeBigWindow(getContext());
-//            }
-//        });
-        mRlBigWindow.setOnTouchListener(new OnTouchListener() {
+
+        findViewById(R.id.mbtnTest).setOnClickListener(new OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_OUTSIDE) {
-                    Log.w("MotionEvent.ACTION_OUTSIDE");
-                    MyWindowManager.removeBigWindow(mContext);
-                    MyWindowManager.createSmallWindow(mContext);
-                }
-                return true;
+            public void onClick(View v) {
+                Toast.makeText(mContext,"哈哈",Toast.LENGTH_LONG).show();
             }
         });
         viewWidth = mRlBigWindow.getLayoutParams().width;
@@ -63,14 +54,15 @@ public class FloatWindowBigView extends LinearLayout {
 
     }
 
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-//            MyWindowManager.removeBigWindow(mContext);
-//            MyWindowManager.createSmallWindow(mContext);
-//        }
-//        return true;
-//    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+            Log.w("onTouchEvent.ACTION_OUTSIDE");
+            MyWindowManager.removeBigWindow(mContext);
+            MyWindowManager.createSmallWindow(mContext);
+        }
+        return true;
+    }
 
 
 }

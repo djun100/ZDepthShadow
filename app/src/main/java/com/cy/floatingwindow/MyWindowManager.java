@@ -1,6 +1,5 @@
 package com.cy.floatingwindow;
 
-import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.view.Gravity;
@@ -34,10 +33,7 @@ public class MyWindowManager {
      */
     private static WindowManager mWindowManager;
 
-    /**
-     * 用于获取手机可用内存
-     */
-    private static ActivityManager mActivityManager;
+
     private static int screenWidth;
     private static int screenHeight;
     private static Context mContext;
@@ -106,12 +102,14 @@ public class MyWindowManager {
                 y = screenHeight / 2 - FloatWindowBigView.viewHeight / 2;
                 bigWindowParams.type = LayoutParams.TYPE_TOAST;
                 bigWindowParams.format = PixelFormat.RGBA_8888;
-                //具体flag见http://developer.android.com/reference/android/view/MotionEvent.html#ACTION_OUTSIDE
-                bigWindowParams.flags = //背后的视图能够接受触摸事件
-                         LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
+                //FLAG_NOT_FOCUSABLE必加，不然后面层的view不会获取焦点
+                bigWindowParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                        | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
+
                 bigWindowParams.gravity = Gravity.CENTER;
-                bigWindowParams.width = LayoutParams.MATCH_PARENT;
-                bigWindowParams.height = LayoutParams.MATCH_PARENT;
+                //必须是包裹的，不然touch_outside没有意义
+                bigWindowParams.width = LayoutParams.WRAP_CONTENT;
+                bigWindowParams.height = LayoutParams.WRAP_CONTENT;
             }
             windowManager.addView(bigWindow, bigWindowParams);
 
